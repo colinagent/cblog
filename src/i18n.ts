@@ -191,7 +191,7 @@ export function getFooterLinks(locale: Locale) {
             links: [
                 { name: t.footer.rss, url: getRssUrl(locale) },
                 { name: t.footer.sitemap, url: '/sitemap-index.xml' },
-                { name: 'X', url: 'https://x.com/ColinAgent9527' },
+                { name: 'X', url: 'https://x.com/colinagentcom' },
             ],
         },
     ]

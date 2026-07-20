@@ -19,8 +19,8 @@ export const NavigationLinks: NavigationLink[] = [
 
 export const Friends: User[] = [
     {
-        avatar: 'https://x.com/ColinAgent9527',
-        social: { twitter: 'ColinAgent9527', blog: '', github: '' },
+        avatar: 'https://x.com/colinagentcom',
+        social: { twitter: 'colinagentcom', blog: '', github: '' },
         title: '',
         name: '',
         description: '',
@@ -56,7 +56,7 @@ export const FooterLinks = [
         links: [
             { name: 'RSS', url: '/rss.xml' },
             { name: 'Site Map', url: '/sitemap-index.xml' },
-            { name: 'X', url: 'https://x.com/ColinAgent9527' },
+            { name: 'X', url: 'https://x.com/colinagentcom' },
         ],
     },
 ]
