@@ -1,0 +1,70 @@
+---
+title: "RAG or Markdown? First, Get the Scale Right"
+description: "As projects grow, keyword search and a single index file stop scaling. RAG and Markdown solve different problems — the choice comes down to scale."
+category: ai-engineering
+pubDate: 2026-07-22
+draft: false
+tags:
+  - RAG
+  - Markdown
+  - Enterprise AI
+  - Knowledge Base
+  - AI Engineering
+---
+
+Most people assume that as AI gets stronger, it gets easier to use. The opposite is often true — the bigger your project grows, the dumber AI starts to feel.
+
+That's because it has no idea what you've changed. Large models are trained on static data. Every time your project moves forward, you need some way to bring the model up to speed.
+
+What happens when AI doesn't know what's new?
+
+1. Weaker models, or models with limited reasoning, will just guess.
+2. Stronger models will re-explore from scratch every new session. In VibeCoding this is common — the AI keeps running keyword searches through your codebase until it finds the right answer.
+
+Today's AI is smart enough to search local files or the web by keyword before answering. For a single project, that works great — especially locally, where agents can call CLI tools to retrieve context. The results are often surprisingly good.
+
+But as projects grow, and as you start merging more of them together, keyword search takes longer and eats more context. Sometimes the context window is gone before the agent even starts doing real work.
+
+## The Markdown Index Approach
+
+One fix is an index file — usually something like `AGENTS.md` or `index.md` — that tells the AI what projects exist and gives a short description of each. I write a lot of docs while building, then list each file's path and summary in `index.md`. The AI can jump straight to the right doc instead of hunting around. Much faster.
+
+That works at personal scale. At enterprise scale, you're looking at hundreds of thousands — even millions — of documents, plus data sitting in SaaS tools and databases. A single index file stops being viable.
+
+That's where RAG (Retrieval-Augmented Generation) comes in.
+
+## How RAG Works
+
+A RAG pipeline usually runs in four stages: Indexing → Retrieval → Augmentation → Generation. Each step adds relevant, up-to-date context to the model's output.
+
+- **Indexing**
+  External content — docs, email, tickets, and so on — gets converted into vectors that capture semantic meaning, then stored in a vector database. Retrieval can match on meaning, not just keywords.
+- **Retrieval**
+  When a user asks a question, the system compares it against indexed embeddings and pulls back the most relevant documents. The exact retrieval strategy depends on the data and use case, but the goal is always the same: give the model the best supporting material.
+- **Augmentation**
+  Retrieved content gets folded into the original query to build an enriched prompt. Some RAG systems also apply query rewriting, ranking, or user history to sharpen context. The result is a prompt with more grounding and direction.
+- **Generation**
+  The language model answers from that enriched prompt. Because the input includes both the user's question and supporting evidence, outputs tend to be more accurate, less hallucinated, and more on-target. Advanced systems may add re-ranking or summarization on top. The architecture lets RAG produce answers that reflect current information instead of whatever the model learned at training time.
+
+## Where RAG Pays Off
+
+RAG is already delivering clear value across industries:
+
+- **Search and Q&A:** One search entry point across email, docs, tickets, CRM, and more — accurate, personalized answers for employees.
+- **Customer support:** Agents (human or bot) pull knowledge articles, past cases, and technical docs to resolve issues faster.
+- **Sales enablement:** Reps get product specs, pricing guidance, and case studies in real time to tailor conversations and shorten cycles.
+- **Content generation:** Marketing, HR, and other teams auto-generate summaries, onboarding guides, and policy overviews from the latest source material.
+- **Analytics and reporting:** RAG-backed tools synthesize data into actionable summaries so teams can move faster.
+
+That's just the start. As RAG architectures evolve, expect more tailored applications in compliance, finance, legal, and beyond.
+
+## RAG or Markdown? It Depends on Scale
+
+For personal projects or small teams with a manageable doc set, an `index.md` plus the AI's own retrieval is enough. You don't need RAG.
+
+Enterprises are different. Hundreds of thousands or millions of documents scattered across SaaS apps and databases — keyword search won't cut it. RAG is the default choice.
+
+So it's not "Markdown first, then RAG." It's a scale call:
+
+- Personal / small team → Markdown index
+- Document-heavy enterprise → RAG
