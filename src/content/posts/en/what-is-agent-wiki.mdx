@@ -1,0 +1,82 @@
+---
+title: "What Is Agent Wiki?"
+description: "Company wikis die because nobody wants to maintain them. Agent Wiki compiles Markdown at ingest time — and drives the cost of editing links, summaries, and cross-references close to zero."
+category: ai-engineering
+pubDate: 2026-07-23
+draft: false
+tags:
+  - Agent Wiki
+  - Knowledge Base
+  - RAG
+  - Markdown
+  - AI Engineering
+---
+
+Feishu docs, Notion, Confluence — at first everyone's excited. Meeting notes go in, specs get written, new hires can look things up on their own. Six months later you open it again and it's almost certainly dead: stale pages, broken links, key conclusions still stuck three versions ago. Nobody trusts it. Everyone goes back to asking each other on WeChat or Slack.
+
+The reason is simple. The hard part was never "getting stuff in." It's maintenance. A requirement changes, and you have to update the summary, related pages, cross-references, and check whether anything contradicts old conclusions. Nobody wants that job. In the end you're back to syncing through conversations.
+
+## What Is Agent Wiki?
+
+In the first half of 2026, four leading AI companies — DeepWiki, AutoWiki, OpenWiki, and GBrain — started doing almost the same thing at once: use large models to read raw sources and "compile" them into a set of continuously maintained Markdown pages. When the source changes, the compiled output updates with it. When an agent answers a question, it doesn't have to re-parse everything from scratch every time — it reads the processed result. More and more people are calling this pattern Agent Wiki.
+
+Example: you're running a project and the material is everywhere — requirements in Feishu, meeting notes, customer WeChat threads, a few proposals that keep getting revised. Two months later you ask the AI: "Why did we end up choosing option B?" It has to dig through a pile of raw text on the spot and stitch an answer together. That work evaporates when the session ends. Ask again tomorrow and it starts over. Agent Wiki is like having someone constantly maintain a project handbook: new material comes in, relevant pages get updated, outdated conclusions get fixed. When you ask the same question again, the AI reads the organized handbook — not the chat logs and notes from scratch every time.
+
+## Core Idea: Process at Input, Not at Query
+
+Unlike RAG, which processes at query time, Agent Wiki's core idea is to process — or compile — at input time. A typical RAG flow looks like this: upload documents, chunk and vectorize them, then at query time pull relevant chunks for the model to reference before it answers.
+
+RAG isn't useless. But it has a structural flaw. Ask the same question ten thousand times and you're still pulling the same chunks, having the model answer from scratch, with zero improvement — same tokens, same time, same compute.
+
+Agent Wiki flips that. It processes on the way in. Every time new content arrives, the agent proactively updates what's affected and persists those updates as documents.
+
+## How Agent Wiki Works
+
+An Agent Wiki usually has three layers:
+
+- **Raw**: source material. The agent reads it but doesn't modify it.
+- **Wiki**: Markdown the agent maintains. You shouldn't edit this by hand. It holds summaries, object pages (people, companies, projects, customers), concept docs (e.g. `acceptance-criteria.md`, `rag.md`), and cross-references.
+- **Schema**: instructions for how the agent should run the system — often in files like `AGENTS.md` or `CLAUDE.md`. Models read these automatically and know how to maintain the wiki.
+
+Day to day, three jobs run on the wiki: **ingest** — new material comes in and all affected pages get updated; **query** — answer from the wiki, and good answers can be written back as new pages so exploration compounds; **lint** — periodically hunt for contradictions, stale conclusions, and orphan pages nobody links to.
+
+## Why Human-Maintained Wikis Die
+
+Company wikis almost always die. They feel great at first. Then a new piece of material lands and you're touching a dozen pages — cross-references, summaries, reconciling old and new conclusions. The work never ends and never looks impressive. Nobody actually spends time on it. Content rots, trust collapses, and the wiki is dead — reduced to an online doc collaboration tool.
+
+AI is different. It doesn't get tired of tidying up or checking for inconsistencies. That almost wipes out the old maintenance cost.
+
+## Limitations
+
+**Scale**
+
+Without RAG, once you're past a few hundred wiki pages, a local index file eats too much of the agent's context. At some scale you need retrieval on top.
+
+**Information loss**
+
+Processing at ingest means an early summary might quietly drop a detail from the source — and every later answer inherits that gap.
+
+**Staleness**
+
+A compiled wiki page is only as fresh as the last refresh. If raw material has moved on but the wiki hasn't, they drift apart.
+
+**Cost**
+
+Having the model organize documents burns tokens.
+
+## Summary
+
+Agent Wiki tackles a problem that's been stuck for humans for eighty years.
+
+In 1945, Vannevar Bush proposed the Memex: a personal knowledge base with associative trails between documents. The idea wasn't complicated. What blocked it for decades was the least glamorous part — who maintains those trails? Not that nobody thought about it. Nobody wanted to do it.
+
+Maintaining a knowledge base was never hard because of reading or thinking. It was hard because of *editing*: fixing links, rewriting summaries, reconciling one new document against dozens of old ones. Endless, invisible work.
+
+Agent Wiki's real contribution is driving the cost of "editing" close to zero. The model doesn't get bored, doesn't forget to fix links, can touch a dozen pages in one pass. For the first time, a knowledge base has a shot at staying alive. People didn't get more diligent — the maintenance job changed hands.
+
+It has boundaries: at scale you add retrieval, summaries lose detail, without refresh things go stale, and it costs tokens to run. Those are engineering problems, not a wrong direction.
+
+## References
+
+- [mem0ai on X](https://x.com/mem0ai/status/2079585032587694582)
+- [colinagent.com](https://colinagent.com)
